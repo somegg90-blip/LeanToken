@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pandas==2.2.2
+tiktoken
+groq
+python-multipart
+python-dotenv
+pydantic-settings
+supabase
