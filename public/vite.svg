@@ -1,0 +1,27 @@
+<!-- public/vite.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Background: Rounded square with gradient -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#18181b"/>
+      <stop offset="100%" style="stop-color:#3f3f46"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded background -->
+  <rect x="2" y="2" width="28" height="28" rx="6" fill="url(#logoGradient)"/>
+  
+  <!-- "L" Logo Mark -->
+  <path 
+    d="M10 8h4v12h6v4H10V8z" 
+    fill="white" 
+    stroke="white" 
+    stroke-width="0.5"
+  />
+  
+  <!-- Subtle glow effect -->
+  <rect x="2" y="2" width="28" height="28" rx="6" 
+        fill="none" 
+        stroke="rgba(255,255,255,0.1)" 
+        stroke-width="1"/>
+</svg>
