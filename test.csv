@@ -1,6 +1,0 @@
-prompt,completion,model
-Write a short hello world function,Here is the code...,gpt4
-Summarize this long legal document about contracts and agreements,The summary is...,gpt4
-Translate this to French,La traduction est...,gpt-3.5-turbo
-Fix this bug in my python script,Here is the fix...,gpt4
-Write a long detailed story about a dragon,Once upon a time...,gpt4
