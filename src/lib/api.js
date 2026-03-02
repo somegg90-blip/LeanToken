@@ -1,53 +1,65 @@
 // src/lib/api.js
-// ✅ Dynamic API URL: Works in dev AND production
+import axios from 'axios'
 
-const getApiUrl = () => {
-  // Vercel sets VERCEL_ENV automatically
-  if (process.env.NODE_ENV === 'production') {
-    // ✅ Use your live Render backend
-    return process.env.NEXT_PUBLIC_API_URL || 'https://leantoken-api.onrender.com/api/v1'
-  }
-  // ✅ Local development
-  return 'http://localhost:10000/api/v1'
-}
+// ✅ Dynamic API URL for dev + production
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:10000/api/v1'
 
-export const API_BASE_URL = getApiUrl()
+// Create axios instance with default config
+export const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
-// Helper for authenticated requests
-export const apiRequest = async (endpoint, options = {}) => {
-  const token = localStorage.getItem('sb-access-token') // Supabase auth token
+// Add auth token to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('sb-access-token')
+  const userId = localStorage.getItem('user_id')
   
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token && { 'x-user-id': token }), // Or use Authorization header
-      ...options.headers,
-    },
-  })
-  
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({}))
-    throw new Error(error.detail || `API error: ${response.status}`)
+  if (userId) {
+    config.headers['x-user-id'] = userId
   }
   
-  return response.json()
-}
+  return config
+})
 
-// Specific API methods
-export const api = {
-  analyze: (formData) => 
-    fetch(`${API_BASE_URL}/analyze`, {
-      method: 'POST',
-      body: formData, // FormData for file upload
+// Handle errors globally
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Redirect to login or show auth error
+      console.error('Authentication required')
+    }
+    return Promise.reject(error)
+  }
+)
+
+// API methods
+export const apiMethods = {
+  // Upload CSV for analysis
+  analyze: async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    
+    const response = await api.post('/analyze', formData, {
       headers: {
-        'x-user-id': localStorage.getItem('sb-access-token'),
+        'Content-Type': 'multipart/form-data',
       },
-    }).then(res => res.json()),
-    
-  getHistory: () => 
-    apiRequest('/history'),
-    
-  health: () => 
-    fetch(`${API_BASE_URL}/health`).then(res => res.json()),
+    })
+    return response.data
+  },
+  
+  // Get analysis history
+  getHistory: async () => {
+    const response = await api.get('/history')
+    return response.data
+  },
+  
+  // Health check
+  health: async () => {
+    const response = await api.get('/health')
+    return response.data
+  },
 }
