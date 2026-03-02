@@ -1,10 +1,21 @@
+# requirements.txt - Render Free Tier Optimized
 fastapi>=0.110.0,<0.111.0
 uvicorn[standard]>=0.29.0,<0.30.0
+
+# pandas: Use version with Python 3.12 wheel
 pandas>=2.2.0,<2.3.0
-tiktoken>=0.7.0,<0.8.0
+
+# tiktoken: Use pre-built wheel version (NO Rust compilation)
+tiktoken>=0.5.2,<0.6.0
+
+# AI providers
 groq>=0.4.0,<0.5.0
+
+# Utilities
 python-multipart>=0.0.9,<0.1.0
 python-dotenv>=1.0.1,<2.0.0
 pydantic-settings>=2.2.0,<3.0.0
 supabase>=2.8.0,<3.0.0
-gunicorn>=22.0.0,<23.0.0 
+
+# Production server
+gunicorn>=22.0.0,<23.0.0
