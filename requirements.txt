@@ -1,15 +1,16 @@
-# requirements.txt - Render Free Tier Optimized
+# requirements.txt - Render Free Tier + Dependency Compatibility
 fastapi>=0.110.0,<0.111.0
 uvicorn[standard]>=0.29.0,<0.30.0
 
-# pandas: Use version with Python 3.12 wheel
+# Data processing
 pandas>=2.2.0,<2.3.0
 
-# tiktoken: Use pre-built wheel version (NO Rust compilation)
+# Tokenization (pre-built wheel for Python 3.12)
 tiktoken>=0.5.2,<0.6.0
 
-# AI providers
-groq>=0.4.0,<0.5.0
+# AI providers - FIXED VERSIONS for httpx compatibility
+groq>=0.9.0,<0.10.0
+httpx>=0.27.0,<0.28.0
 
 # Utilities
 python-multipart>=0.0.9,<0.1.0
