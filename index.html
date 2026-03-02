@@ -1,4 +1,4 @@
-<!-- index.html -->
+<!-- index.html - MUST be in repo ROOT (same level as package.json) -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LeanToken | FinOps for AI - Stop Burning Tokens</title>
     <meta name="description" content="Optimize LLM spend with real-time cost visibility. FinOps for AI with GPT-4o, Claude 3.5, and Llama 3." />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
   </head>
   <body class="bg-zinc-50">
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- ✅ Use relative path for Vercel compatibility -->
+    <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>
